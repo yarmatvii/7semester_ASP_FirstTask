@@ -1,0 +1,9 @@
+﻿@{
+    ViewData["Title"] = "Account";
+}
+<h1>@ViewData["Title"]</h1>
+<h2>Login: @ViewBag.Login</h2>
+<h2>Password: @ViewData["password"]</h2>
+<br />
+@await Html.PartialAsync("ChangePassword")
+<a asp-controller="Home" asp-action="Logout"><input type="button" value="Logout"></a>

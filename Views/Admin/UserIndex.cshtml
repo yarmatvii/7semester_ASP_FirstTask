@@ -1,0 +1,54 @@
+﻿@model IEnumerable<_7semester_ASP_FirstTask.Models.User>
+
+@{
+	ViewData["Title"] = "UserIndex";
+}
+
+<h2><a asp-controller="AdminBagrains" asp-action="Index">Bagrains</a></h2>
+
+<p>
+	<a asp-action="UserCreate">UserCreate New</a>
+</p>
+<table class="table">
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.Name)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.login)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.password)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.Country)
+			</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.Name)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.login)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.password)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Country)
+				</td>
+				<td>
+					<a asp-action="UserEdit" asp-route-id="@item.Id">UserEdit</a> |
+					<a asp-action="UserDetails" asp-route-id="@item.Id">UserDetails</a> |
+					<a asp-action="UserDelete" asp-route-id="@item.Id">UserDelete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>

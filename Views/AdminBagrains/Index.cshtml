@@ -1,0 +1,108 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@using _7semester_ASP_FirstTask.Models
+@model BagrainsViewModel
+
+<style>
+	.glyphicon {
+		display: inline-block;
+		padding: 0 5px;
+	}
+
+	.glyphicon-chevron-right:after {
+		content: "\00BB";
+	}
+
+	.glyphicon-chevron-left:before {
+		content: "\00AB";
+	}
+</style>
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+<h2><a asp-controller="Admin" asp-action="UserIndex">Users</a></h2>
+<h1>List of slaves:</h1>
+
+<p>
+	<a asp-action="Create">Create New</a>
+</p>
+
+<form method="get">
+	<label>Name: </label>
+	<input name="skinTone" value="@Model.FilterViewModel.SelectedSkinTone" />
+
+	<label>Master: </label>
+	<select name="master" asp-items="Model.FilterViewModel.Masters"></select>
+
+	<input type="submit" value="Filter" />
+</form>
+
+<table>
+	<thead>
+		<tr>
+			<th>
+				<a asp-action="Index"
+				   asp-route-sortOrder="@(Model.SortViewModel.SkinToneSort)"
+				   asp-route-skinTone="@(Model.FilterViewModel.SelectedSkinTone)"
+				   asp-route-master="@(Model.FilterViewModel.SelectedMaster)">SkinTone</a>
+			</th>
+			<th>
+				<a asp-action="Index"
+				   asp-route-sortOrder="@(Model.SortViewModel.AgeSort)"
+				   asp-route-skinTone="@(Model.FilterViewModel.SelectedSkinTone)"
+				   asp-route-master="@(Model.FilterViewModel.SelectedMaster)">Age</a>
+			</th>
+			<th>
+				<a asp-action="Index"
+				   asp-route-sortOrder="@(Model.SortViewModel.MasterSort)"
+				   asp-route-skinTone="@(Model.FilterViewModel.SelectedSkinTone)"
+				   asp-route-master="@(Model.FilterViewModel.SelectedMaster)">Master</a>
+			</th>
+			<th>
+				Price
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (Slave s in Model.Slaves)
+		{
+			<tr>
+				<td>@s.SkinTone</td>
+				<td>@s.Age</td>
+				<td>@s.Master?.Name</td>
+				<td>@s.Price</td>
+				<td>
+					<a asp-action="Edit" asp-route-id="@s.Id">Edit</a> |
+					<a asp-action="Details" asp-route-id="@s.Id">Details</a> |
+					<a asp-action="Delete" asp-route-id="@s.Id">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+<p>
+	@if (Model.PageViewModel.HasPreviousPage)
+	{
+		<a asp-action="Index"
+	   asp-route-page="@(Model.PageViewModel.PageNumber - 1)"
+	   asp-route-skinTone="@(Model.FilterViewModel.SelectedSkinTone)"
+	   asp-route-master="@(Model.FilterViewModel.SelectedMaster)"
+	   asp-route-sortOrder="@(Model.SortViewModel.Current)"
+	   class="glyphicon glyphicon-chevron-left">
+			Back
+		</a>
+	}
+	@if (Model.PageViewModel.HasNextPage)
+	{
+		<a asp-action="Index"
+	   asp-route-page="@(Model.PageViewModel.PageNumber + 1)"
+	   asp-route-skinTone="@(Model.FilterViewModel.SelectedSkinTone)"
+	   asp-route-master="@(Model.FilterViewModel.SelectedMaster)"
+	   asp-route-sortOrder="@(Model.SortViewModel.Current)"
+	   class="glyphicon glyphicon-chevron-right">
+			Forward
+		</a>
+	}
+</p>
